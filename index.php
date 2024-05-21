@@ -20,31 +20,35 @@ require "connect.php";
                             <th>Città</th>
                             <th>Anno di Fondazione</th>
                             <th>Colori</th>
+                            <th>Azioni</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php 
-                        $query = "SELECT * FROM squadra;";
-                        $st = $pdo->prepare($query);
-                        $risultato = $st->execute();
-                        if ($risultato) {
-                            $valori = $st->fetchAll(PDO::FETCH_OBJ);
-                            foreach ($valori as $valore) {
-                                echo "<tr>";
-                                echo "<td>".$valore->nome."</td>";
-                                echo "<td>".$valore->cittaId."</td>";
-                                echo "<td>".$valore->annofondazione."</td>";
-                                echo "<td>".$valore->colorisociali."</td></tr>";
+                        <form action="inserimento.php">
+                            <?php 
+                            $query = "SELECT * FROM squadra, citta WHERE cittaId=codCitta;";
+                            $st = $pdo->prepare($query);
+                            $risultato = $st->execute();
+                            if ($risultato) {
+                                $valori = $st->fetchAll(PDO::FETCH_OBJ);
+                                foreach ($valori as $valore) {
+                                    echo "<tr>";
+                                    echo "<td>$valore->nome</td>";
+                                    echo "<td>$valore->nomeCitta</td>";
+                                    echo "<td>$valore->annofondazione</td>";
+                                    echo "<td>$valore->colorisociali</td>";
+                                    echo "<td><input type=\"submit\" value=\"ELIMINA\"><span> </span><button type=\"submit\" class=\"btn btn-warning\">Modifica</button></td></tr>";
+                                }
                             }
-                        }
-                        ?>
+                            ?>
+                        </form>
                     </tbody>
                 </table>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <a href="form.php"><button class="btn btn-primary">Crea squadra</button></a>
+                <a href="immissione.php"><button class="btn btn-primary">Crea squadra</button></a>
             </div>
         </div>
     </div>
