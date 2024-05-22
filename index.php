@@ -24,24 +24,22 @@ require "connect.php";
                         </tr>
                     </thead>
                     <tbody>
-                        <form action="inserimento.php">
-                            <?php 
-                            $query = "SELECT * FROM squadra, citta WHERE cittaId=codCitta;";
-                            $st = $pdo->prepare($query);
-                            $risultato = $st->execute();
-                            if ($risultato) {
-                                $valori = $st->fetchAll(PDO::FETCH_OBJ);
-                                foreach ($valori as $valore) {
-                                    echo "<tr>";
-                                    echo "<td>$valore->nome</td>";
-                                    echo "<td>$valore->nomeCitta</td>";
-                                    echo "<td>$valore->annofondazione</td>";
-                                    echo "<td>$valore->colorisociali</td>";
-                                    echo "<td><input type=\"submit\" value=\"ELIMINA\"><span> </span><button type=\"submit\" class=\"btn btn-warning\">Modifica</button></td></tr>";
-                                }
+                        <?php 
+                        $query = "SELECT * FROM squadra, citta WHERE cittaId=codCitta;";
+                        $st = $pdo->prepare($query);
+                        $risultato = $st->execute();
+                        if ($risultato) {
+                            $valori = $st->fetchAll(PDO::FETCH_OBJ);
+                            foreach ($valori as $valore) {
+                                echo "<tr>";
+                                echo "<td>$valore->nome</td>";
+                                echo "<td>$valore->nomeCitta</td>";
+                                echo "<td>$valore->annofondazione</td>";
+                                echo "<td>$valore->colorisociali</td>";
+                                echo "<td><button onclick=\"modifica($valore->codSquadra)\">MODIFICA</button><button onclick=\"elimina($valore->codSquadra)\">ELIMINA</button></td></tr>";
                             }
-                            ?>
-                        </form>
+                        }
+                        ?>
                     </tbody>
                 </table>
             </div>
@@ -52,6 +50,20 @@ require "connect.php";
             </div>
         </div>
     </div>
+    <script>
+        function elimina(codice) {
+            if(confirm("Sei sicuro di voler eliminare la squadra?")) {
+                let destinazione = "inserimento.php?type=elimina&id=" + codice;
+                window.location.href = destinazione;
+            }
+        }
+        function modifica(codice) {
+            if (confirm("Sei sicuro di voler modificare questa squadra?")) {
+                let destinazione = "modifica.php?id=" + codice;
+                window.location.href = destinazione;
+            }
+        }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

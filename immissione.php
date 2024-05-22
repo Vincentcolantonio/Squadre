@@ -18,6 +18,7 @@ $cittas = $st->fetchAll(PDO::FETCH_OBJ);
         <div class="row">
             <div class="col gy-5">
                 <form action="inserimento.php" method="get">
+                    <input type="text" name="type" value="immissione">
                     <div class="row">
                         <div class="col">
                             <label for="nome" class="form-label">Nome Squadra</label>
