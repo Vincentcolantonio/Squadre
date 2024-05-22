@@ -31,7 +31,7 @@ $cittas = $st->fetchAll(PDO::FETCH_OBJ);
                             <select class="form-select" name="citta" id="citta">
                                 <?php
                                 foreach ($cittas as $citta) 
-                                    echo "<option value=\"$citta->codCitta\">$citta->nome</option>";
+                                    echo "<option value=\"$citta->codCitta\">$citta->nomeCitta</option>";
                                 ?>
                             </select>
                         </div>
